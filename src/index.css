@@ -1,0 +1,286 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== macOS 风格全局样式 ===== */
+
+:root {
+  --sidebar-width: 260px;
+  --preview-width: 400px;
+  --color-accent: #007AFF;
+  --color-green: #34C759;
+  --color-yellow: #FF9500;
+  --color-red: #FF3B30;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  /* 面板层次（克制 macOS） */
+  --bg-app: #f5f5f7;          /* 左右栏底色 */
+  --bg-surface: #ffffff;      /* 聊天主区 */
+  --bg-elevated: #fafafa;     /* 卡片内部 */
+  --border-subtle: rgba(0, 0, 0, 0.06);
+  --border-strong: rgba(0, 0, 0, 0.1);
+  --text-primary: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-tertiary: #a1a1a6;
+}
+
+.dark {
+  --bg-app: #1c1c1e;
+  --bg-surface: #1c1c1e;
+  --bg-elevated: #242426;
+  --border-subtle: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --text-primary: #e5e5e7;
+  --text-secondary: #b0b0b4;
+  --text-tertiary: #8e8e93;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background: var(--bg-app);
+  font-family: 'Inter', 'SF Pro Display', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+/* ===== 滚动条 (macOS 风格细滚动条) ===== */
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+/* ===== 选中文本 ===== */
+
+::selection {
+  background: rgba(0, 122, 255, 0.2);
+}
+
+/* ===== 毛玻璃侧边栏 ===== */
+
+.glass-sidebar {
+  background: rgba(246, 246, 248, 0.82);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* ===== 自定义输入框 ===== */
+
+.chat-input {
+  resize: none;
+  outline: none;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  padding: 10px 14px;
+  font: inherit;
+  line-height: 1.6;
+  background: var(--bg-surface);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.chat-input:focus {
+  border-color: rgba(0, 122, 255, 0.4);
+  box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.08);
+}
+
+/* ===== 消息动画 ===== */
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.message-enter { animation: fadeInUp 0.25s ease-out; }
+
+@keyframes greetReveal {
+  0% { opacity: 0; transform: translateY(12px); filter: blur(4px); }
+  40% { opacity: 0; }
+  100% { opacity: 1; transform: translateY(0); filter: blur(0); }
+}
+
+.greet-animate {
+  animation: greetReveal 1.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ===== 思考中动画 ===== */
+
+@keyframes dotPulse {
+  0%, 80%, 100% { opacity: 0.3; }
+  40% { opacity: 1; }
+}
+
+.dot-pulse span {
+  animation: dotPulse 1.4s infinite;
+}
+
+.dot-pulse span:nth-child(2) { animation-delay: 0.2s; }
+.dot-pulse span:nth-child(3) { animation-delay: 0.4s; }
+
+/* ===== 深色模式 ===== */
+
+.dark body,
+.dark #root {
+  background: #1c1c1e;
+  color: #e5e5e7;
+}
+
+.dark .glass-sidebar {
+  background: rgba(30, 30, 32, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* 输入框 */
+.dark .chat-input {
+  background: #2c2c2e;
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #d1d1d4;
+}
+
+.dark .chat-input:focus {
+  border-color: rgba(100, 150, 255, 0.35);
+  box-shadow: 0 0 0 3px rgba(100, 150, 255, 0.08);
+}
+
+.dark .chat-input::placeholder {
+  color: #5c5c60;
+}
+
+/* 消息气泡 */
+.dark .bg-blue-50 { background: rgba(50, 80, 140, 0.18); }
+.dark .text-blue-600 { color: #7eaaf0; }
+.dark .text-blue-700 { color: #8db8f8; }
+.dark .bg-blue-50\/50 { background: rgba(50, 80, 140, 0.12); }
+.dark .border-blue-100 { border-color: rgba(80, 120, 200, 0.2); }
+
+.dark .bg-green-100 { background: rgba(50, 140, 80, 0.18); }
+.dark .text-green-600 { color: #5ec97c; }
+.dark .text-green-700 { color: #6fd68c; }
+.dark .bg-green-50 { background: rgba(50, 140, 80, 0.12); }
+.dark .border-green-100 { border-color: rgba(80, 180, 90, 0.2); }
+
+.dark .bg-red-50 { background: rgba(160, 50, 50, 0.15); }
+.dark .border-red-100 { border-color: rgba(200, 80, 80, 0.2); }
+
+.dark .bg-amber-50 { background: rgba(160, 130, 30, 0.15); }
+.dark .border-amber-100 { border-color: rgba(200, 160, 50, 0.2); }
+.dark .text-amber-600 { color: #d4a840; }
+.dark .text-amber-700 { color: #e0b850; }
+.dark .text-amber-800 { color: #c89830; }
+
+/* 通用背景和边框 */
+.dark .bg-white { background: #1c1c1e; }
+.dark .bg-gray-50 { background: #242426; }
+.dark .bg-gray-100 { background: #2c2c2e; }
+.dark .bg-gray-50\/50 { background: rgba(36, 36, 38, 0.5); }
+.dark .bg-gray-50\/60 { background: rgba(36, 36, 38, 0.6); }
+
+.dark .border-black\/5 { border-color: rgba(255, 255, 255, 0.06); }
+.dark .border-black\/10 { border-color: rgba(255, 255, 255, 0.08); }
+.dark .border-black\/\[0\.03\] { border-color: rgba(255, 255, 255, 0.03); }
+.dark .border-gray-100 { border-color: rgba(255, 255, 255, 0.07); }
+.dark .border-gray-200 { border-color: rgba(255, 255, 255, 0.1); }
+
+.dark .bg-black\/\[0\.04\] { background: rgba(255, 255, 255, 0.04); }
+.dark .bg-black\/\[0\.03\] { background: rgba(255, 255, 255, 0.03); }
+.dark .hover\:bg-black\/\[0\.04\]:hover { background: rgba(255, 255, 255, 0.06); }
+.dark .hover\:bg-black\/\[0\.03\]:hover { background: rgba(255, 255, 255, 0.05); }
+.dark .hover\:bg-gray-50:hover { background: #2c2c2e; }
+.dark .hover\:bg-gray-100:hover { background: #323234; }
+.dark .hover\:bg-gray-200:hover { background: #3a3a3c; }
+
+/* 阴影 */
+.dark .shadow-sm { box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3); }
+.dark .shadow-mac { box-shadow: 0 0 0 0.5px rgba(255,255,255,0.06), 0 2px 8px rgba(0,0,0,0.2); }
+.dark .shadow-mac-input { box-shadow: 0 0 0 1px rgba(255,255,255,0.05), 0 2px 4px rgba(0,0,0,0.2); }
+.dark .shadow-lg { box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); }
+.dark .shadow-2xl { box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5); }
+
+/* 滚动条 */
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+.dark ::selection {
+  background: rgba(100, 150, 255, 0.25);
+}
+
+/* 文字颜色 */
+.dark .text-gray-700 { color: #e5e5e7; }
+.dark .text-gray-600 { color: #d1d1d4; }
+.dark .text-gray-500 { color: #b0b0b4; }
+.dark .text-gray-400 { color: #8e8e93; }
+.dark .text-gray-350 { color: #6e6e73; }
+.dark .text-gray-300 { color: #5c5c60; }
+.dark .text-black { color: #e5e5e7; }
+
+/* 输入框在深色模式下的背景色 */
+.dark .bg-transparent { background: transparent; }
+.dark .placeholder\:text-gray-300::placeholder { color: #5c5c60; }
+
+/* 消息区域内联样式覆盖 */
+.dark pre,
+.dark code {
+  background: #2c2c2e;
+  color: #d1d1d4;
+}
+
+/* 消息气泡深色 — 柔和色调 */
+.dark .bg-blue-100 { background: rgba(50, 85, 140, 0.25); }
+.dark .text-blue-500 { color: #6a9fec; }
+.dark .hover\:text-blue-500:hover { color: #7eb0f8; }
+
+.dark .bg-green-50 { background: rgba(40, 110, 70, 0.15); }
+.dark .bg-yellow-100 { background: rgba(140, 110, 20, 0.2); }
+.dark .text-yellow-600 { color: #c8a830; }
+.dark .text-yellow-700 { color: #d4b840; }
+.dark .bg-yellow-50\/60 { background: rgba(140, 110, 20, 0.15); }
+
+/* 侧边栏选中态 */
+.dark .bg-blue-50 { background: rgba(40, 75, 140, 0.22); }
+.dark .bg-blue-50\/80 { background: rgba(40, 75, 140, 0.35); }
+.dark .hover\:bg-blue-50\/50:hover { background: rgba(40, 75, 140, 0.18); }
+
+/* Diff 视图深色调整 */
+.dark .bg-green-50\/60 { background: rgba(40, 120, 60, 0.15); }
+.dark .bg-yellow-50\/60 { background: rgba(140, 110, 20, 0.15); }
+.dark .bg-red-50\/60 { background: rgba(140, 50, 40, 0.15); }
+
+.dark .ring-1 { --tw-ring-color: rgba(255, 255, 255, 0.06); }
+.dark .ring-blue-200 { --tw-ring-color: rgba(80, 130, 220, 0.3); }
+
+.dark .bg-blue-50\/30 { background: rgba(40, 70, 130, 0.15); }
+.dark .border-blue-300 { border-color: rgba(80, 130, 220, 0.3); }
+
+.dark .bg-opacity-70 { --tw-bg-opacity: 0.7; }
+.dark .opacity-70 { opacity: 0.7; }
