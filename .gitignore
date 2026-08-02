@@ -24,3 +24,6 @@ Thumbs.db
 
 # 本地缓存
 .cache/
+
+# Claude Code 会话数据
+.claude/
